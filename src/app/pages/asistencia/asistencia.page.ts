@@ -60,53 +60,81 @@ export class AsistenciaPage implements OnInit {
     let respuesta = await lastValueFrom(datos);
     let json_texto = JSON.stringify(respuesta);
     let json = JSON.parse(json_texto);
-
-    for(let x=0; x< json[0].length; x++) {
-      let asistencia: any = {}
+  
+    for (let x = 0; x < json[0].length; x++) {
+      let asistencia: any = {};
       asistencia.curso_sigla = json[0][x].curso_sigla;
       asistencia.curso_nombre = json[0][x].curso_nombre;
       asistencia.presente = json[0][x].presente;
       asistencia.ausente = json[0][x].ausente;
-      asistencia.porcentajeAsistencia = (asistencia.presente/(asistencia.presente+asistencia.ausente))*100
+      asistencia.porcentajeAsistencia = (asistencia.presente / (asistencia.presente + asistencia.ausente)) * 100;
       const datos = await this.db.obtenerAsistencia(this.correo, asistencia.curso_sigla);
       asistencia.fechas = datos.map((clase: any) => {
         return {
           fecha: clase.fecha,
         };
       });
-      asistencia.mostrarMas = false; //
+      asistencia.mostrarMas = false; 
       this.asistencias.push(asistencia);
     }
     this.porcentajeAsistencia = this.asistencias[0]?.porcentajeAsistencia || 0;
     this.cdr.detectChanges(); 
   }
+  
 
-  async scan(): Promise<void> {
-    const granted = await this.requestPermissions();
-    if (!granted) {
+  async scan() {
+    try {
+      await BarcodeScanner.installGoogleBarcodeScannerModule();
+    } catch (e) {
+      console.log("SQ: modulos no instalados")
+    }
+
+    let codigo_texto = await BarcodeScanner.scan();
+
+    if (codigo_texto.barcodes.length > 0) {
+      const codigoQR = codigo_texto.barcodes[0].displayValue;
+      const [sigla, fecha] = codigoQR.split('|');
+  
+      if (sigla && fecha) {
+        this.marcarAsistencia(sigla, this.correo, fecha);
+      } else {
       this.presentAlert();
-      return;
-    } else {
-      let resultado = await BarcodeScanner.scan();
-      if (resultado.barcodes.length > 0) {
-        this.texto = resultado.barcodes[0].displayValue;
-        console.log("PLF, QR: " + this.texto);
-        const [codigoClase, nombreClase, fechaClase] = this.texto.split("|")
-        let datos = this.api.marcarAsistencia(codigoClase, this.correo, fechaClase)
-        let respuesta = await lastValueFrom(datos);
-        let json_texto = JSON.stringify(respuesta);
-        let json = JSON.parse(json_texto);
-        console.log("PLF: " + json.message);
-        this.v_mensaje = json.message;
-        this.isAlertOpen = true;
-        this.db.almacenarAsistencia(this.correo, codigoClase, fechaClase);
-        setTimeout(() => {
-          this.isAlertOpen = false;
-          window.location.reload(); // Recarga completa
-        }, 3000)
       }
+    } else {
+      this.presentAlert();
     }
   }
+
+  async marcarAsistencia(sigla: string, correo: string, fecha: string) {
+    try {
+      const body = {
+        sigla: sigla,
+        correo: correo,
+        fecha: fecha
+      };
+  
+      const response = await fetch('https://www.s2-studio.cl/api_duoc/usuario/marcar_asistencia', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      });
+  
+      const data = await response.json();
+  
+      if (data.status === 'OK') {
+        this.v_mensaje = data.message; 
+        this.infoAsistencia(); 
+      } else {
+        this.v_mensaje = 'Error al marcar la asistencia.';
+      }
+    } catch (error) {
+      this.v_mensaje = 'Hubo un problema al conectar con la API.';
+      console.error(error);
+    }
+  }
+  
 
   async requestPermissions(): Promise<boolean> {
     const { camera } = await BarcodeScanner.requestPermissions();

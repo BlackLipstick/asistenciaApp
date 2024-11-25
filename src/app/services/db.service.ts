@@ -166,11 +166,11 @@ export class DbService {
     .catch(e => console.log('SQ: ERROR AL CREAR O ABRIR BASE DE DATOS'));
   }
 
-  actualizarUsuario(correo: string, contrasena: string, nombre: string, apellido: string, carrera: string) {
+  actualizarUsuario(correo: string, contrasena: string, carrera: string) {
     if (this.dbInstance) {
       this.dbInstance.executeSql(
-        'UPDATE usuario SET correo = ?, contrasena = ?, nombre = ?, apellido = ?, carrera = ? WHERE correo = ? AND contrasena = ?',
-        [correo, contrasena, nombre, apellido, carrera, correo, contrasena]
+        'UPDATE usuario SET correo = ?, contrasena = ?, carrera = ? WHERE correo = ? AND contrasena = ?',
+        [correo, contrasena, carrera, correo, contrasena]
       )
       .then(() => console.log("SQ: Usuario Actualizado OK"))
       .catch(e => console.log('SQ: ERROR AL ACTUALIZAR USUARIO: ' + JSON.stringify(e)));
