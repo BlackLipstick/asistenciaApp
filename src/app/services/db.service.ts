@@ -5,7 +5,6 @@ import { SQLite, SQLiteObject } from '@awesome-cordova-plugins/sqlite/ngx';
   providedIn: 'root'
 })
 export class DbService {
-  private Db: SQLiteObject | undefined;  
 
   dbInstance: SQLiteObject | null = null;
   users: any[] = [];
@@ -21,34 +20,22 @@ export class DbService {
       location: 'default'
     })
     .then((db: SQLiteObject) => {
-      db.executeSql('create table if not exists usuario (correo varchar(70), contrasena varchar(30), nombre varchar(30), apellido varchar(30), carrera varchar(30), sede varchar(30))',
-      [])
+      this.dbInstance = db;
+      
+      db.executeSql('CREATE TABLE IF NOT EXISTS usuario (correo VARCHAR(70), contrasena VARCHAR(30), nombre VARCHAR(30), apellido VARCHAR(30), carrera VARCHAR(30))', [])
         .then(() => console.log('SQ: TABLA USUARIO OK'))
         .catch(e => console.log('SQ: ERROR AL CREAR TABLA USUARIO: ' + JSON.stringify(e)));
-    })
-    .catch(e => console.log('SQ: ERROR AL CREAR O ABRIR BASE DE DATOS'));
-
-    this.sqlite.create({
-      name: 'data.db',
-      location: 'default'
-    })
-    .then((db: SQLiteObject) => {
-      db.executeSql('create table if not exists sesion (correo varchar(30), contrasena varchar(30))', [])
+      
+      db.executeSql('CREATE TABLE IF NOT EXISTS sesion (correo VARCHAR(30), contrasena VARCHAR(30))', [])
         .then(() => console.log('SQ: TABLA SESION CREADA CORRECTAMENTE'))
         .catch(e => console.log('SQ: ERROR AL CREAR TABLA SESION: ' + JSON.stringify(e)));
-    })
-    .catch(e => console.log('SQ: ERROR AL CREAR O ABRIR BASE DE DATOS'));
-
-    this.sqlite.create({
-      name: 'data.db',
-      location: 'default'
-    })
-    .then((db: SQLiteObject) => {
-      db.executeSql('create table if not exists asistencia (correo varchar(30), sigla varchar(30), fecha varchar(30))', [])
+  
+      db.executeSql('CREATE TABLE IF NOT EXISTS asistencia (correo VARCHAR(30), sigla VARCHAR(30), fecha VARCHAR(30))', [])
         .then(() => console.log('SQ: TABLA ASISTENCIA CREADA CORRECTAMENTE'))
         .catch(e => console.log('SQ: ERROR AL CREAR TABLA ASISTENCIA: ' + JSON.stringify(e)));
+  
     })
-    .catch(e => console.log('SQ: ERROR AL CREAR O ABRIR BASE DE DATOS'));
+    .catch(e => console.log('SQ: ERROR AL CREAR O ABRIR BASE DE DATOS: ' + JSON.stringify(e)));
   }
   
 
@@ -253,7 +240,7 @@ export class DbService {
     }
   }
 
-  async obtenerAsistencia(correo: string, sigla: string)  {
+  async obtenerAsistencia(correo: string, sigla: string) {
     try {
       const db = await this.sqlite.create({
         name: 'data.db',
@@ -297,15 +284,19 @@ export class DbService {
         console.log("SQ: No se encontraron datos para el usuario.");
         return null;
       }
-    } catch (e) {
-      console.log('SQ, DB: Error al obtener asistencia' + JSON.stringify(e));
-      throw e; // Lanza el error para que se pueda manejar externamente si es necesario
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error(`SQ: Error al recuperar los datos del usuario: ${error.message}`);
+      } else {
+        console.error("SQ: Error desconocido al recuperar los datos del usuario");
+      }
+      throw error;
     }
   }
-  
   
   
   
     
   
 }
+

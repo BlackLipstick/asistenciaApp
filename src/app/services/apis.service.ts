@@ -29,6 +29,9 @@ export class ApisService {
     return this.http.post(this.ruta + "/api_duoc/usuario/usuario_login", objeto).pipe()
   }
 
+  obtencionSedes() {
+    return this.http.get(this.ruta + "/api_duoc/usuario/sedes_obtener").pipe()
+  }
 
   modificacionUsuario(correo: string, contrasena: string, carrera:string) {
     let objeto: any = {};
@@ -48,7 +51,7 @@ export class ApisService {
     return this.http.post(this.ruta + "/api_duoc/usuario/marcar_asistencia", objeto).pipe()
   }
 
-  obtenerAsistencia(correo: string, sigla: string) {
+  obtenerAsistencia(correo: string) {
     return this.http.get(this.ruta + "/api_duoc/usuario/asistencia_obtener?correo=" + correo).pipe()
   }
 

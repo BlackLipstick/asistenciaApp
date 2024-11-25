@@ -1,34 +1,34 @@
 <ion-header [translucent]="true">
-  <ion-toolbar class="navbar">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/principal"></ion-back-button>
-    </ion-buttons>
-    <div class="ion-margin ion-text-center">
-      <ion-title>Actualizar Datos</ion-title>
-    </div>
-  </ion-toolbar>
+    <ion-toolbar class="navbar">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/principal"></ion-back-button>
+      </ion-buttons>
+      <div class="ion-margin ion-text-center">
+        <ion-title>Actualizar Datos</ion-title>
+      </div>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="fondo">
-  <ion-img src="assets/img-datos.svg" class="img-datos"></ion-img>
-  <form (ngSubmit)="actualizarUsuario()">
-    <ion-item class="datosProfile">
-      <ion-label position="stacked">Correo Actual</ion-label>
-      <ion-input [(ngModel)]="mdl_correo_actual" name="correo_actual" required></ion-input>
-    </ion-item>
+  <ion-img src="assets/img-datos.svg"  class="img-datos" ></ion-img>
+    <form (ngSubmit)="actualizarDatos()">
+      <ion-item class="datosProfile">
+        <ion-label position="stacked">Correo Actual</ion-label>
+        <ion-input [(ngModel)]="mdl_correo_actual" name="carrera" required></ion-input>
+      </ion-item>
 
-    <ion-item class="datosProfile">
-      <ion-label position="stacked">Nueva Contraseña</ion-label>
-      <ion-input [(ngModel)]="mdl_contrasena_nueva" name="contrasena_nueva" type="password" required></ion-input>
-    </ion-item>
+      <ion-item class="datosProfile">
+        <ion-label position="stacked">Nueva Contraseña</ion-label>
+        <ion-input [(ngModel)]="contrasena"  type="password" required></ion-input>
+      </ion-item>
 
-    <ion-item class="datosProfile">
-      <ion-label position="stacked">Nueva Carrera</ion-label>
-      <ion-input [(ngModel)]="mdl_carrera_nueva" name="carrera_nueva" required></ion-input>
-    </ion-item>
+      <ion-item class="datosProfile">
+        <ion-label position="stacked">Nueva Carrera</ion-label>
+        <ion-input [(ngModel)]="mdl_carrera_nueva"  required></ion-input>
+      </ion-item>
 
-    <ion-button type="submit" class="btn ion-margin-top" fill="solid" expand="block">
-      <span>Confirmar Cambio</span>
-    </ion-button>
-  </form>
+      <ion-button (click)="actualizarUsuario()" class="btn ion-margin-top" fill="solid" expand="block">
+        <span> Confirmar Cambio </span>
+      </ion-button>  
+    </form> 
 </ion-content>

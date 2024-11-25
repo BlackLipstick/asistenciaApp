@@ -36,6 +36,10 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
 
+.navbar {
+    --background: linear-gradient(63deg, rgba(7,3,57,1) 0%, rgba(1,1,22,1) 50%, rgba(35,35,36,1) 100%);
+    --color: #dbdbdb;
+}
 
 .fondo {
     --background: radial-gradient(circle, rgba(3,0,45,1) 0%, rgba(3,1,32,1) 41%, rgba(54,54,56,1) 100%);
@@ -72,9 +76,9 @@
 }
 
 .img-profile {
-    width: 50%;
+    width: 70%;
     margin: 2%;
-    margin-top: 15%;
+    margin-top: 4%;
     margin-left: auto;
     margin-right: auto;
     display: flex;
@@ -92,17 +96,17 @@
 }
 
 .boton-login {
-    --background: rgb(83, 100, 252) ;
+    --background: rgba(35,35,36,1) ;
     --color:#FFFFFF;
-    margin-left: 20%;
-    margin-right: 20%;
+    margin-left: 30%;
+    margin-right: 30%;
     justify-content: center;
     display: flex;
     
 }
 
 .boton-perfil {
-    --background: rgb(83, 100, 252) ;
+    --background: rgba(35,35,36,1) ;
     --color:#FFFFFF;
     margin-top: 10%;
     margin-left: 20%;
@@ -122,61 +126,3 @@
 .input-letra {
     --color:#FFFFFF;
 }
-
-  
-.contenedor-boton {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-}
-  
-.boton-qr {
-    width: 200px;
-    height: 200px;
-    font-size: 18px;
-    --border-radius: 50%;
-    --background: #3880ff; 
-    --color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-.lista-asistencias {
-    margin: 20px 10px;
-}
-  
-.asistencia-card {
-    margin-bottom: 15px;
-    --background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-}
-  
-.asistencia-porcentaje {
-    font-weight: bold;
-    color: #4caf50; 
-}
-  
-.asistencia-detalle {
-    font-size: 14px;
-    color: #757575; 
-}
-  
-.boton-detalles {
-    color: #007bff; 
-}
-  
-.detalles-fechas {
-    margin-top: 10px;
-}
-  
-.fecha-item {
-    font-size: 14px;
-    color: #555555; 
-}
-  
-  

@@ -48,24 +48,22 @@ export class ActualizarDatosPage implements OnInit {
     let json_texto = JSON.stringify(respuesta);
     let json = JSON.parse(json_texto);
 
-    if (json.status == "success") {
+    if(json.status == "success") {
       this.v_visible = false;
       this.isAlertOpen = true;
       this.v_mensaje = json.message;
-    
       await this.db.verificarUsuario(this.correo);
-      await this.db.actualizarDatos(this.mdl_contrasena_nueva, this.mdl_carrera_nueva, this.correo, this.contrasena);
-    
-      this.isAlertOpen = false; // Cierra la alerta
-      // Luego de actualizar los datos, redirige
-      this.router.navigate(['principal'], { replaceUrl: true });
-      
+      this.db.actualizarDatos(this.mdl_contrasena_nueva, this.mdl_carrera_nueva, this.correo, this.contrasena)
+      /* console.log("Datos actualizados en la base de datos") */
+      setTimeout(() => {
+        this.isAlertOpen = false;
+        this.router.navigate(['login'], { replaceUrl: true});
+      }, 3000)
       this.cerrarSesion();
     } else {
       this.v_visible = true;
       this.v_mensaje = json.message;
-    }
-    
+      }
   }
 
   cerrarSesion() {
