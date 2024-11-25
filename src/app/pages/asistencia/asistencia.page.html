@@ -1,0 +1,54 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Asistencia</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="fondo">
+  <!-- Contenedor del botón para marcar asistencia -->
+  <div class="contenedor-boton">
+    <ion-button expand="block" shape="round" size="large" (click)="scan()" class="boton-qr">
+      <ion-icon name="qr-code-outline" slot="start"></ion-icon>
+      Marcar Asistencia
+    </ion-button>
+  </div>
+
+  <!-- Mostrar alerta cuando isAlertOpen esté activo -->
+  <ion-alert
+    *ngIf="isAlertOpen"
+    header="Resultado"
+    [message]="v_mensaje"
+    buttons="OK">
+  </ion-alert>
+
+  <!-- Lista de asistencias por curso -->
+  <ion-list class="lista-asistencias">
+    <ion-card *ngFor="let asistencia of asistencias" class="asistencia-card">
+      <ion-card-header>
+        <ion-card-title>{{ asistencia.curso_nombre }} ({{ asistencia.curso_sigla }})</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p class="asistencia-porcentaje">Asistencia: {{ asistencia.porcentajeAsistencia | number:'1.0-2' }}%</p>
+        <p class="asistencia-detalle">Presente: {{ asistencia.presente }}</p>
+        <p class="asistencia-detalle">Ausente: {{ asistencia.ausente }}</p>
+
+        <!-- Botón para mostrar más detalles -->
+        <ion-button fill="clear" (click)="asistencia.mostrarMas = !asistencia.mostrarMas" class="boton-detalles">
+          {{ asistencia.mostrarMas ? 'Ocultar Detalles' : 'Mostrar Detalles' }}
+        </ion-button>
+
+        <!-- Detalles adicionales (fechas) si existen y si el usuario seleccionó ver más detalles -->
+        <div *ngIf="asistencia.mostrarMas" class="detalles-fechas">
+          <ion-list>
+            <ion-item *ngFor="let fecha of asistencia.fechas" class="fecha-item">
+              <ion-label>Fecha: {{ fecha }}</ion-label>
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+</ion-content>

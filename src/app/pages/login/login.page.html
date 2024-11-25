@@ -1,0 +1,39 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="navbar">
+    <div class="ion-margin ion-text-center">
+      <ion-title >Empecemos </ion-title>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="fondo">
+  <ion-img src="assets/img-splash.svg" class="img-login"></ion-img>
+
+
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div class="input-container">
+          <ion-input class="input-letra" [(ngModel)]="mdl_correo" label="Correo Electronico" labelPlacement="floating" [counter]="true" maxlength="20"></ion-input>
+      </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div class="input-container">
+          <ion-input class="input-letra" [(ngModel)]="mdl_contrasena" label="Contraseña" type="Password" labelPlacement="floating" [counter]="true" maxlength="17"></ion-input>
+      </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button (click)="login()" class="boton-login"> INGRESAR </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-button (click)="navegarCrearUsuario()" class="boton-login" > CREAR CUENTA </ion-button>
+
+  
+</ion-content>

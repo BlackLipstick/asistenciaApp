@@ -1,0 +1,56 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="navbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <div class="ion-margin ion-text-center">
+      <ion-title>Registro Usuario</ion-title>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="fondo">
+  <ion-img src="assets/img-sing-up.svg" class="img-sing-up"></ion-img>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div class="input-container">
+          <ion-input class="input-letra" [(ngModel)]="mdl_correo" label="Correo Electronico" labelPlacement="floating" [counter]="true" maxlength="20"></ion-input>
+      </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div class="input-container">
+          <ion-input class="input-letra" [(ngModel)]="mdl_contrasena" label="Contraseña" type="Password" labelPlacement="floating" [counter]="true" maxlength="17"></ion-input>
+      </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div class="input-container">
+          <ion-input class="input-letra" [(ngModel)]="mdl_nombre" label="Nombre" labelPlacement="floating" [counter]="true" maxlength="20"></ion-input>
+      </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div class="input-container">
+          <ion-input class="input-letra" [(ngModel)]="mdl_apellido" label="Apellido" labelPlacement="floating" [counter]="true" maxlength="20"></ion-input>
+      </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div class="input-container">
+          <ion-input class="input-letra" [(ngModel)]="mdl_carrera" label="Carrera" labelPlacement="floating" [counter]="true" maxlength="20"></ion-input>
+      </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button (click)="almacenarUsuario()" class="boton-login"> CREAR USUARIO </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

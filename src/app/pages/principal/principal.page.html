@@ -1,0 +1,38 @@
+<ion-header [translucent]="true">
+  <ion-toolbar >
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <div class="ion-margin ion-text-center">
+      <ion-title>Perfil</ion-title>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="fondo">
+  <ion-img src="assets/img-profile.svg" class="img-profile"></ion-img>
+  
+  <ion-item class="datosProfile">
+    <ion-label position="stacked">Nombre</ion-label>
+    <ion-input [(ngModel)]="usuario.nombre" readonly></ion-input>
+  </ion-item>
+  
+  <ion-item class="datosProfile">
+    <ion-label position="stacked">Apellido</ion-label>
+    <ion-input [(ngModel)]="usuario.apellido" readonly></ion-input>
+  </ion-item>
+  
+  <ion-item class="datosProfile">
+    <ion-label position="stacked">Carrera</ion-label>
+    <ion-input [(ngModel)]="usuario.carrera" readonly></ion-input>
+  </ion-item>
+  
+
+  <ion-button class="boton-perfil" (click)="actualizarDatos()">Actualizar Datos</ion-button>
+
+  <ion-button class="boton-perfil" (click)="irAsistencia()">Ir a Asistencia</ion-button>
+  
+</ion-content>
+
+
+
